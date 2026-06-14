@@ -1,1 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Official Top Up Center</title>
+</head>
+<body>
 
+    <header>
+        <div class="logo">Garena Official Top Up</div>
+    </header>
+
+    <div class="banner">
+        <h2>BRAND NEW OFFICIAL TOP UP CENTER</h2>
+    </div>
+
+    <div class="login-card">
+        <div class="step-title">1 Login</div>
+        <label>Player ID</label>
+        <div class="input-box">
+            <input type="text" placeholder="Please enter player ID here">
+            <button>Login</button>
+        </div>
+    </div>
+
+    <div class="recent-box">
+        <div class="item">
+            <span class="icon">💎</span>
+            <div class="info">
+                <strong>Tiger OP</strong> GET <br> 310 Diamonds
+                <p>2 mins ago</p>
+            </div>
+            <span class="check">✔</span>
+        </div>
+    </div>
+
+</body>
+</html>
