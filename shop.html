@@ -1,23 +1,39 @@
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 columns */
-    gap: 10px;
-    padding: 10px;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Official Top Up Center</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
 
-.card, .deal-card {
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 15px;
-    text-align: center;
-}
+<div class="shop-container">
+    <div class="user-banner">
+        <p><strong>Player ID:</strong> 2503151290 (IND) | <a href="/">Change ID</a></p>
+    </div>
 
-img {
-    width: 60px; /* Adjust as needed */
-}
+    <h3>TOP_UP CENTER</h3>
+    <div class="grid-container">
+        <div class="card">
+            <div class="badge">-25%</div>
+            <p><strong>100</strong> Diamonds</p>
+            <p><strike>₹80</strike> <span class="price">₹60</span></p>
+        </div>
+        <div class="card">
+            <div class="badge">-25%</div>
+            <p><strong>310</strong> Diamonds</p>
+            <p><strike>₹240</strike> <span class="price">₹180</span></p>
+        </div>
+    </div>
 
-.redeem-card {
-    border: 2px dashed #4285F4;
-    padding: 20px;
-    margin-top: 10px;
-}
+    <h3>Special Deals</h3>
+    <div class="deal-card">
+        <div class="badge">-25%</div>
+        <p>Weekly Membership</p>
+        <p class="price">₹119</p>
+    </div>
+</div>
+
+</body>
+</html>
