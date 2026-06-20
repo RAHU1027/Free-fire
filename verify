@@ -1,0 +1,5 @@
+<div class="verify-box">
+    <h3>ACCOUNT VERIFIED</h3>
+    <p>Player ID: {{ player_id }}</p>
+    <a href="/shop"><button>CONTINUE</button></a>
+</div>
