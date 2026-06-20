@@ -1,17 +1,20 @@
-import os
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-# Yeh line Render ke liye zaroori hai
-# Agar PORT environment variable set hai toh use use karega, 
-# warna default 5000 par chalega
-port = int(os.environ.get("PORT", 5000))
-
 @app.route('/')
-def home():
+def index():
     return render_template('index.html')
 
+@app.route('/verify', methods=['POST'])
+def verify():
+    # ID capture karein
+    player_id = request.form.get('playerId')
+    return render_template('verify.html', player_id=player_id)
+
+@app.route('/shop')
+def shop():
+    return render_template('shop.html')
+
 if __name__ == '__main__':
-    # Render ke liye host '0.0.0.0' hona chahiye
-    app.run(host='0.0.0.0', port=port)
+    app.run(debug=True)
