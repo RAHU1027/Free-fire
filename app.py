@@ -1,10 +1,22 @@
 from flask import Flask, render_template, request, redirect, url_for, session
+import sqlite3
 
 app = Flask(__name__)
-app.secret_key = 'supersecretkey' # Session ke liye zaroori hai
+app.secret_key = 'your_secret_key'
 
-# Demo valid IDs (Aap yahan apni valid IDs ki list daal sakte hain)
-VALID_IDS = ['1234567890', '9876543210'] 
+# Database connect karein
+def get_db():
+    conn = sqlite3.connect('users.db')
+    return conn
+
+# Database table setup (sirf ek baar chalana hai)
+def init_db():
+    conn = get_db()
+    conn.execute('CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY)')
+    # 500+ IDs add karne ka logic ya loop yahan laga sakte hain
+    conn.close()
+
+init_db()
 
 @app.route('/')
 def index():
@@ -13,22 +25,19 @@ def index():
 @app.route('/login', methods=['POST'])
 def login():
     player_id = request.form.get('playerId')
-    # Check karein ki ID valid list mein hai ya nahi
-    if player_id in VALID_IDS:
+    conn = get_db()
+    user = conn.execute('SELECT * FROM users WHERE id = ?', (player_id,)).fetchone()
+    conn.close()
+    
+    if user:
         session['user_id'] = player_id
         return redirect(url_for('verify'))
     else:
-        return "Invalid Player ID! Please try again."
+        return "Invalid ID. 500+ members system mein ID nahi mili."
 
 @app.route('/verify')
 def verify():
-    if 'user_id' in session:
-        return render_template('verify.html', player_id=session['user_id'])
-    return redirect(url_for('index'))
-
-@app.route('/shop')
-def shop():
-    return render_template('shop.html')
+    return render_template('verify.html', player_id=session.get('user_id'))
 
 if __name__ == '__main__':
     app.run(debug=True)
