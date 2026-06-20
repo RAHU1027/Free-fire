@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<!-- Top-Up Packages -->
+<div class="section">
+    <h3>TOP_UP CENTER</h3>
+    <div class="grid-container">
+        <div class="card">
+            <p><strong>100</strong> Diamonds</p>
+            <p><strike>₹80</strike> ₹60</p>
+        </div>
+        <div class="card">
+            <p><strong>310</strong> Diamonds</p>
+            <p><strike>₹240</strike> ₹180</p>
+        </div>
+        <!-- Baaki 520, 1060, 2180, 5600 ke cards yahan add karein -->
+    </div>
+</div>
+
+<!-- Special Deals -->
+<div class="section">
+    <h3>Special Deals</h3>
+    <div class="deal-card">
+        <img src="{{ url_for('static', filename='images/weekly.png') }}" alt="Weekly">
+        <p>Weekly Membership</p>
+        <p>₹119</p>
+    </div>
+    <div class="deal-card">
+        <img src="{{ url_for('static', filename='images/evo3d.png') }}" alt="Evo">
+        <p>Evo Access 3D</p>
+        <p>₹74</p>
+    </div>
+</div>
+
+<!-- Google Play Redeem Code -->
+<div class="section">
+    <h3>Google Play Redeem Code</h3>
+    <div class="redeem-card">
+        <p>SPECIAL DISCOUNT 50% OFF</p>
+        <img src="{{ url_for('static', filename='images/playstore.png') }}" alt="Google Play">
+    </div>
+</div>
+
+</body>
+</html>
