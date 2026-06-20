@@ -1,5 +1,23 @@
-<div class="verify-box">
-    <h3>ACCOUNT VERIFIED</h3>
-    <p>Player ID: {{ player_id }}</p>
-    <a href="/shop"><button>CONTINUE</button></a>
-</div>
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    gap: 10px;
+    padding: 10px;
+}
+
+.card, .deal-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+}
+
+img {
+    width: 60px; /* Adjust as needed */
+}
+
+.redeem-card {
+    border: 2px dashed #4285F4;
+    padding: 20px;
+    margin-top: 10px;
+}
