@@ -1,4 +1,5 @@
 flask
+telebot
 pymongo
+requests
 dnspython
-gunicorn
