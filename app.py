@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 # --- CONFIGURATION ---
 BOT_TOKEN = "8922478884:AAHgrLyM20xpxi-GKRiC_W_Gx8uwMUV0E5s"
-YOUR_TELEGRAM_ID = "YOUR_NUMERIC_ID_HERE" # Apni Telegram ID yahan likhein
+YOUR_TELEGRAM_ID = "6632236983" # Apni Telegram ID yahan likhein
 bot = telebot.TeleBot(BOT_TOKEN)
 
 # --- UI TEMPLATE ---
