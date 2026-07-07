@@ -1,16 +1,25 @@
+import os
 from flask import Flask, render_template
 
-# 1. Initialize Flask app
 app = Flask(__name__)
 
-# 2. Main route (Homepage)
+# Dummy products data (Isse baad mein MongoDB se replace kar lena)
+products = {
+    "google_play": [
+        {"id": 1, "name": "₹ 10 Google Code", "price": 10},
+        {"id": 2, "name": "₹ 100 Google Code", "price": 100}
+    ],
+    "gaming": [
+        {"id": 3, "name": "FF Weekly Membership", "price": 89},
+        {"id": 4, "name": "100 Diamonds", "price": 80}
+    ]
+}
+
 @app.route('/')
 def index():
-    # 'index.html' aapke 'templates' folder mein honi chahiye
-    return render_template('index.html')
+    return render_template('index.html', products=products)
 
-# 3. Server run configuration
 if __name__ == '__main__':
-    # host='0.0.0.0' aur port 5000 set kiya hai
-    # debug=True se aapko errors turant pata chal jayenge
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    # Render ke liye port dynamic rakha hai
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
