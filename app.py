@@ -1,6 +1,13 @@
+from flask import Flask, render_template
+
+# 1. Sabse pehle Flask instance create karein
+app = Flask(__name__)
+
+# 2. Ab decorators ka use karein
 @app.route('/')
 def index():
-    # MongoDB se data fetch karein
-    play_codes = db.products.find({'category': 'google_play'})
-    others = db.products.find({'category': 'gaming'})
-    return render_template('index.html', play_codes=play_codes, others=others)
+    return render_template('index.html')
+
+# 3. Last mein app run karein
+if __name__ == '__main__':
+    app.run(debug=True)
