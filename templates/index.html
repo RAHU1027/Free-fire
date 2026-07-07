@@ -1,27 +1,28 @@
-<div class="container">
-    <h3 class="mt-4">Google Play Redeem Codes</h3>
-    <div class="row">
-        <div class="col-md-3">
-            <div class="card mb-3">
-                <div class="card-body text-center">
-                    <h5>₹ 100</h5>
-                    <p class="text-muted">Google Play Gift Card</p>
-                    <button class="btn btn-primary w-100">Pay ₹ 100</button>
-                </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Kushal Store</title>
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Kushal Digital Store</h2>
+        <div class="row">
+            <!-- Google Play Column -->
+            <div class="col-md-6">
+                <h4>Google Play Codes</h4>
+                {% for item in products.google_play %}
+                <div class="card mb-2 p-3">{{ item.name }} - ₹{{ item.price }} <button class="btn btn-sm btn-primary">Buy</button></div>
+                {% endfor %}
             </div>
-        </div>
-        </div>
-
-    <h3 class="mt-4">Gaming Memberships & Items</h3>
-    <div class="row">
-        <div class="col-md-3">
-            <div class="card mb-3">
-                <div class="card-body text-center">
-                    <h5>FF Weekly Membership</h5>
-                    <p class="text-muted">Garena Free Fire</p>
-                    <button class="btn btn-success w-100">Pay ₹ 89</button>
-                </div>
+            <!-- Gaming Column -->
+            <div class="col-md-6">
+                <h4>Gaming Items</h4>
+                {% for item in products.gaming %}
+                <div class="card mb-2 p-3">{{ item.name }} - ₹{{ item.price }} <button class="btn btn-sm btn-success">Buy</button></div>
+                {% endfor %}
             </div>
         </div>
     </div>
-</div>
+</body>
+</html>
