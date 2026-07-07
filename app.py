@@ -1,7 +1,9 @@
+import os
 from flask import Flask, render_template
 
 app = Flask(__name__)
 
+# Aapka poora product menu data
 products = [
     {"name": "FF Weekly Membership", "desc": "Garena Free Fire (Once in 2 Weeks)", "tag": "instant", "price": 8500, "image": "ff_membership.png"},
     {"name": "Booyah Premium Pass", "desc": "Garena Free Fire (Once in 2 Week)", "tag": "instant", "price": 15000, "image": "booyah_pass.png"},
@@ -19,4 +21,6 @@ def index():
     return render_template('index.html', products=products)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Render aur local dono ke liye port setup
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
