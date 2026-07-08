@@ -1,5 +1,5 @@
 flask
-telebot
 pymongo
+flask-login
 requests
-dnspython
+python-dotenv
