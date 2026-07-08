@@ -1,25 +1,50 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
+from flask_login import LoginManager, UserMixin, login_user, login_required
+from pymongo import MongoClient
+import requests
+import threading
+import time
+import string
+import random
 
 app = Flask(__name__)
+app.secret_key = 'kushal_secret_key'
 
-# Aapke saare products list
-products = [
-    {"name": "100 Google Play", "price": 12000, "image": "https://i.imgur.com/example1.png"},
-    {"name": "100 Diamonds", "price": 1000, "image": "https://i.imgur.com/example2.png"},
-    {"name": "Booyah Pass", "price": 15000, "image": "https://i.imgur.com/example3.png"},
-    {"name": "50 Google Play", "price": 6000, "image": "https://i.imgur.com/example4.png"},
-    {"name": "FF Membership", "price": 8500, "image": "https://i.imgur.com/example5.png"},
-    {"name": "Amazon Pay 20", "price": 500, "image": "https://i.imgur.com/example6.png"},
-    {"name": "10 Google Code", "price": 1500, "image": "https://i.imgur.com/example7.png"}
-]
+# MongoDB Config
+client = MongoClient("YOUR_MONGODB_CONNECTION_STRING_HERE")
+db = client['shortener_db']
+urls = db['links']
+users = db['users']
 
-@app.route('/')
+# 24/7 Uptime Ping Function
+def keep_alive():
+    while True:
+        try:
+            # Apne domain ka URL yaha daal dena
+            requests.get("https://your-app-name.onrender.com") 
+        except:
+            pass
+        time.sleep(300) # Har 5 minute mein ping
+
+threading.Thread(target=keep_alive, daemon=True).start()
+
+# Helper: Short Code Generator
+def generate_code():
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=6))
+
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html', products=products)
+    if request.method == 'POST':
+        long_url = request.form['url']
+        short_code = generate_code()
+        urls.insert_one({'original': long_url, 'code': short_code})
+        return f"Short Link: yourdomain.com/{short_code}"
+    return render_template('index.html')
 
-@app.route('/logout')
-def logout():
-    return "Logged out successfully!"
+@app.route('/<short_code>')
+def redirect_url(short_code):
+    data = urls.find_one({'code': short_code})
+    return redirect(data['original']) if data else "Link not found"
 
 if __name__ == '__main__':
     app.run(debug=True)
