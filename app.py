@@ -1,50 +1,53 @@
-from flask import Flask, render_template, request, redirect, url_for
-from flask_login import LoginManager, UserMixin, login_user, login_required
+import os
+from flask import Flask, render_template, request, redirect, url_for, flash
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from flask_bcrypt import Bcrypt
 from pymongo import MongoClient
-import requests
-import threading
-import time
-import string
-import random
+import string, random
 
 app = Flask(__name__)
 app.secret_key = 'kushal_secret_key'
+bcrypt = Bcrypt(app)
+login_manager = LoginManager(app)
 
-# MongoDB Config
-client = MongoClient("YOUR_MONGODB_CONNECTION_STRING_HERE")
+client = MongoClient(os.getenv("MONGO_URI"))
 db = client['shortener_db']
-urls = db['links']
-users = db['users']
+users_col = db['users']
+urls_col = db['links']
 
-# 24/7 Uptime Ping Function
-def keep_alive():
-    while True:
-        try:
-            # Apne domain ka URL yaha daal dena
-            requests.get("https://your-app-name.onrender.com") 
-        except:
-            pass
-        time.sleep(300) # Har 5 minute mein ping
+class User(UserMixin):
+    def __init__(self, email): self.id = email
 
-threading.Thread(target=keep_alive, daemon=True).start()
+@login_manager.user_loader
+def load_user(email): return User(email)
 
-# Helper: Short Code Generator
-def generate_code():
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=6))
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = bcrypt.generate_password_hash(request.form['password']).decode('utf-8')
+        users_col.insert_one({'_id': email, 'password': password})
+        return redirect(url_for('login'))
+    return render_template('register.html')
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        user_data = users_col.find_one({'_id': request.form['email']})
+        if user_data and bcrypt.check_password_hash(user_data['password'], request.form['password']):
+            login_user(User(user_data['_id']))
+            return redirect(url_for('dashboard'))
+    return render_template('login.html')
+
+@app.route('/dashboard', methods=['GET', 'POST'])
+@login_required
+def dashboard():
     if request.method == 'POST':
         long_url = request.form['url']
-        short_code = generate_code()
-        urls.insert_one({'original': long_url, 'code': short_code})
-        return f"Short Link: yourdomain.com/{short_code}"
-    return render_template('index.html')
-
-@app.route('/<short_code>')
-def redirect_url(short_code):
-    data = urls.find_one({'code': short_code})
-    return redirect(data['original']) if data else "Link not found"
+        code = ''.join(random.choices(string.ascii_letters + string.digits, k=6))
+        urls_col.insert_one({'code': code, 'original': long_url, 'user': current_user.id})
+    user_links = list(urls_col.find({'user': current_user.id}))
+    return render_template('dashboard.html', links=user_links)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
