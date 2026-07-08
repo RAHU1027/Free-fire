@@ -1,5 +1,7 @@
 flask
 pymongo
 flask-login
+flask-bcrypt
 requests
+gunicorn
 python-dotenv
