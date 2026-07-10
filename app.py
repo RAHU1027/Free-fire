@@ -18,7 +18,7 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
 # MongoDB Connection
-client = MongoClient(os.getenv("MONGO_URI"))
+client = MongoClient(os.getenv("mongodb+srv://Elevenyts:Elevenyts@cluster0.vuyc1u2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"))
 db = client['shortener_db']
 users_col = db['users']
 urls_col = db['links']
