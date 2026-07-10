@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Dashboard</title>
+</head>
+<body class="bg-gray-950 text-white p-8">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6">User Dashboard</h1>
+        <form action="/dashboard" method="POST" class="flex gap-2">
+            <input type="url" name="url" placeholder="Paste link here" required class="flex-1 p-3 bg-gray-800 rounded-lg outline-none">
+            <button class="bg-blue-600 px-6 py-3 rounded-lg font-bold">Shorten</button>
+        </form>
+        <div class="mt-8">
+            <h2 class="text-xl mb-4">Your Links</h2>
+            </div>
+    </div>
+</body>
+</html>
