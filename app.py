@@ -38,8 +38,8 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
+        email = request.form.get('admin@kushal.com')
+        password = request.form.get('123456')
         user_data = users_col.find_one({'_id': email})
         if user_data and bcrypt.check_password_hash(user_data['password'], password):
             login_user(User(user_data['_id']))
